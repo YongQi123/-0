@@ -1,0 +1,184 @@
+#include <iostream>
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+using namespace std;
+ 
+
+string key[]={"Begin","End","For","Do","If","Then","Else"};
+
+int keyNum[]={};
+
+string symbol[]={":","+","*",",","(",")",":="};
+
+
+int symbolNum[]={};
+
+string letter[];
+
+string words[];
+int length; 
+int num;
+ 
+int isSymbol(string s){ 
+ int i;
+ for(i=;i<;i++){
+  if(s==symbol[i])
+   return symbolNum[i];
+ }
+ return ;
+} 
+ 
+
+bool isNum(string s){
+ if(s>="0" && s<="9")
+  return true;
+ return false;
+}
+ 
+
+bool isLetter(string s)
+{
+ if((s>="a" && s<="z")||(s>="A" && s<="Z"))
+  return true;
+ return false;
+}
+ 
+
+int isKeyWord(string s){
+ int i;
+ for(i=;i<;i++){
+  if(s==key[i])
+   return keyNum[i];
+ }
+ return ;
+}
+ 
+
+int typeword(string str){
+ if((s>="a" && s<="z")||(s>="A" && s<="Z"))
+  return ;
+ 
+ if(str>="0" && str<="9") 
+  return ;
+ 
+ if(str==":"||str=="+"||str=="*"||str==","||str=="("||str==")"||str==":=") 
+  return ; 
+ 
+}
+ 
+string identifier(string s,int n){
+ int j=n+;
+ int flag=;
+ 
+ while(flag){
+  if(isNum(letter[j]) || isLetter(letter[j])){
+   s=(s+letter[j]).c_str();
+   if(isKeyWord(s)){
+    j++;
+    num=j;
+    return s;
+   }
+   j++;
+  }
+  else{
+   flag=;
+  }
+ } 
+ 
+ num=j;
+ return s;
+}
+ 
+string symbolStr(string s,int n){
+ int j=n+;
+ string str=letter[j];
+ if(str==">"||str=="="||str=="<"||str=="!") {
+  s=(s+letter[j]).c_str();
+  j++;
+ }
+ num=j;
+ return s;
+}
+ 
+string Number(string s,int n){
+ int j=n+;
+ int flag=;
+ 
+ while(flag){
+  if(isNum(letter[j])){
+   s=(s+letter[j]).c_str();
+   j++;
+  }
+  else{
+   flag=;
+  }
+ }
+ 
+ num=j;
+ return s;
+}
+ 
+void print(string s,int n){
+ cout<<"["<<s<<"]"<<":"<<n<<endl;
+}
+ 
+void TakeWord(){
+ int k;
+ 
+ for(num=;num<length;){
+  string str1,str;
+  str=letter[num];
+  k=typeword(str);
+  switch(k){
+   case :
+    {
+     str1=identifier(str,num);
+     if(isKeyWord(str1))
+      print(str1,isKeyWord(str1));
+     else
+      print(str1,);
+     break;
+    }
+ 
+   case :
+    {
+     str1=Number(str,num);
+     print(str1,);
+     break;
+    }
+ 
+   case :
+    {
+     str1=symbolStr(str,num);
+     print(str1,isSymbol(str1));
+     break;
+    }
+ 
+  }
+ 
+ }
+}
+ 
+int main(){
+ char w;
+ int i,j;
+ 
+ freopen("s.txt","r",stdin);
+ freopen("result.txt","w",stdout); 
+ 
+ length=;
+ while(cin>>w){
+  if(w!=' '){
+   letter[length]=w;
+   length++;
+  } 
+ }
+ 
+ TakeWord();
+ 
+ 
+ fclose(stdin);
+ fclose(stdout);
+ return ;
+}
